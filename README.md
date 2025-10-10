@@ -175,10 +175,5 @@ const router = createBrowserRouter([
 ## 🤝 Contribuindo
 
 1. Certifique-se de que os testes estão passando: `npm run test`
-2. Verifique a tipagem: `npm run type-check`
 3. Execute o lint: `npm run lint`
 4. Commits devem passar pelas validações automáticas
-
-## 📄 Licença
-
-Este projeto é privado e de propriedade da Hopion.
