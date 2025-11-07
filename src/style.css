@@ -2,5 +2,13 @@
 
 @theme {
   --color-primary: #fd7213;
-  --color-primary-bg: #061427;
+  --color-primary-bg: #0c0c14;
+  --color-button-primary: #1853CE;
+  --color-text-default: #f0f0f0;
+  --color-secondary: #13131F;
+  --font-family-sans: 'Source Sans 3', sans-serif;
+}
+
+* {
+  font-family: 'Source Sans 3', sans-serif;
 }
