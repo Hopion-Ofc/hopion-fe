@@ -46,7 +46,7 @@ function Footer() {
   };
 
   return (
-    <footer className="bg-primary-bg py-16 px-8">
+    <footer>
       <div className="max-w-7xl mx-auto">
         <div
           className={
