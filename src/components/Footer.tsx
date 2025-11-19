@@ -3,6 +3,7 @@ import Text from "./ui/Text";
 import Input from "./ui/Input";
 import Button from "./ui/Button";
 import { useIsMobile } from "../hooks/useIsMobile";
+import { useSmoothScroll } from "../hooks/useSmoothScroll";
 import hopion_eclipse from "../assets/hopion-eclipse.png";
 import hopion_eclipse_mobile from "../assets/hopion-eclipse-mobile.png";
 import smoothscroll from 'smoothscroll-polyfill';
@@ -10,6 +11,7 @@ import smoothscroll from 'smoothscroll-polyfill';
 function Footer() {
   const isMobile = useIsMobile();
   const isXMobile = useIsMobile(500);
+  const { scrollToSection } = useSmoothScroll();
   const [formData, setFormData] = useState({
     nome: "",
     email: "",
@@ -36,13 +38,7 @@ function Footer() {
   };
 
   const scrollToForm = () => {
-    const formElement = document.getElementById("formSection");
-    if (formElement) {
-      window.scrollTo({
-        top: formElement.offsetTop,
-        behavior: "smooth",
-      });
-    }
+    scrollToSection("formSection");
   };
 
   return (
