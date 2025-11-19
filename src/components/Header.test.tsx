@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import type { Mock } from 'vitest'
-import { render, screen, cleanup } from '@testing-library/react'
+import { render, screen, cleanup, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Header from './Header'
 import { useIsMobile } from '../hooks/useIsMobile'
@@ -49,7 +49,10 @@ describe('Header Component', () => {
       expect(screen.getByText('Página inicial')).toBeInTheDocument()
       
       await userEvent.click(menuButton.parentElement)
-      expect(screen.queryByText('Página inicial')).not.toBeInTheDocument()
+      
+      await waitFor(() => {
+        expect(screen.queryByText('Página inicial')).not.toBeInTheDocument()
+      }, { timeout: 200 })
     }
   })
 })
