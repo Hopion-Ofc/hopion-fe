@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Text from "./ui/Text";
 import Button from "./ui/Button";
 import { useIsMobile } from "../hooks/useIsMobile";
@@ -12,6 +12,7 @@ function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const headerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     smoothscroll.polyfill();
@@ -23,6 +24,27 @@ function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        isMobile &&
+        isMenuOpen &&
+        headerRef.current &&
+        !headerRef.current.contains(event.target as Node)
+      ) {
+        closeMenu();
+      }
+    };
+
+    if (isMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMenuOpen, isMobile]);
 
   const closeMenu = () => {
     setIsClosing(true);
@@ -52,6 +74,7 @@ function Header() {
   return (
     <header className="w-full fixed top-0 left-0 right-0 z-20 transition-all duration-300 px-4">
       <div
+        ref={headerRef}
         className={`transition-all duration-300 mx-auto max-w-7xl ${
           (isScrolled && !isMenuOpen) || (isMobile && isMenuOpen)
             ? "backdrop-blur-md bg-primary-bg/80 shadow-lg rounded-3xl mt-4"
