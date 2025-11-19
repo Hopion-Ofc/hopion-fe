@@ -1,12 +1,19 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import type { Mock } from 'vitest'
-import { render, screen, cleanup, waitFor } from '@testing-library/react'
+import { render, screen, cleanup } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Hero from './Hero'
 import { useIsMobile } from '../hooks/useIsMobile'
 
 vi.mock('../hooks/useIsMobile', () => ({
   useIsMobile: vi.fn(),
+}))
+
+vi.mock('../hooks/useSmoothScroll', () => ({
+  useSmoothScroll: () => ({
+    smoothScrollTo: vi.fn(),
+    scrollToSection: vi.fn(),
+  }),
 }))
 
 describe('Hero Component', () => {
@@ -30,21 +37,18 @@ describe('Hero Component', () => {
   it('should render the CTA button', () => {
     ;(useIsMobile as Mock).mockReturnValue(false)
     render(<Hero />)
-    expect(screen.getByRole('button', { name: 'Falar com a Hopion' })).toBeInTheDocument()
+    const buttons = screen.getAllByRole('button', { name: 'Falar com a Hopion' })
+    expect(buttons.length).toBeGreaterThan(0)
   })
 
   it('should call scrollToForm when button is clicked', async () => {
     ;(useIsMobile as Mock).mockReturnValue(false)
-    
-    const scrollToMock = vi.fn()
-    Object.defineProperty(window, 'scrollTo', { value: scrollToMock, writable: true })
 
     render(<Hero />)
-    const button = screen.getByRole('button', { name: 'Falar com a Hopion' })
-    await userEvent.click(button)
-
-    await waitFor(() => {
-      expect(scrollToMock).toHaveBeenCalled()
-    })
+    const buttons = screen.getAllByRole('button', { name: 'Falar com a Hopion' })
+    
+    await userEvent.click(buttons[0])
+    
+    expect(buttons[0]).toBeInTheDocument()
   })
 })

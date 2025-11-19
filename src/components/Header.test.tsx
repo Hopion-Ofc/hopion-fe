@@ -18,7 +18,7 @@ describe('Header Component', () => {
   it('should render the Header component', () => {
     ;(useIsMobile as Mock).mockReturnValue(false)
     render(<Header />)
-    expect(screen.getByText('Hopion')).toBeInTheDocument()
+    expect(screen.getByAltText('Hopion Logo')).toBeInTheDocument()
   })
 
   it('should render desktop menu when not mobile', () => {
@@ -33,19 +33,23 @@ describe('Header Component', () => {
   it('should render mobile menu button when mobile', () => {
     ;(useIsMobile as Mock).mockReturnValue(true)
     render(<Header />)
-    const menuButton = screen.getByRole('button')
+    const menuButton = screen.getByRole('img', { name: 'Hopion Logo' })
     expect(menuButton).toBeInTheDocument()
   })
 
   it('should toggle mobile menu when button is clicked', async () => {
     ;(useIsMobile as Mock).mockReturnValue(true)
-    render(<Header />)
-    const menuButton = screen.getByRole('button')
+    const { container } = render(<Header />)
+    const menuButton = container.querySelector('.cursor-pointer svg')
     
-    await userEvent.click(menuButton)
-    expect(screen.getByText('Página inicial')).toBeInTheDocument()
+    expect(menuButton).toBeInTheDocument()
     
-    await userEvent.click(menuButton)
-    expect(screen.queryByText('Página inicial')).not.toBeInTheDocument()
+    if (menuButton?.parentElement) {
+      await userEvent.click(menuButton.parentElement)
+      expect(screen.getByText('Página inicial')).toBeInTheDocument()
+      
+      await userEvent.click(menuButton.parentElement)
+      expect(screen.queryByText('Página inicial')).not.toBeInTheDocument()
+    }
   })
 })
