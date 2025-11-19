@@ -10,6 +10,7 @@ function Header() {
   const isMobile = useIsMobile();
   const { smoothScrollTo, scrollToSection } = useSmoothScroll();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -23,14 +24,22 @@ function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const closeMenu = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsMenuOpen(false);
+      setIsClosing(false);
+    }, 150);
+  };
+
   const scrollToForm = () => {
     scrollToSection("formSection");
-    setIsMenuOpen(false);
+    closeMenu();
   };
 
   const handleScrollToSection = (sectionId: string) => {
     scrollToSection(sectionId);
-    setIsMenuOpen(false);
+    closeMenu();
   };
 
   const menuItems = [
@@ -80,7 +89,13 @@ function Header() {
 
           {isMobile && (
             <div
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              onClick={() => {
+                if (isMenuOpen) {
+                  closeMenu();
+                } else {
+                  setIsMenuOpen(true);
+                }
+              }}
               className="text-text-default z-30 cursor-pointer"
             >
               <svg
@@ -110,18 +125,28 @@ function Header() {
         </nav>
 
         {isMobile && isMenuOpen && (
-          <div className="p-8 mb-6">
+          <div className={`p-8 mb-6 ${isClosing ? 'animate-[slideUp_0.15s_ease-out]' : 'animate-[slideDown_0.3s_ease-out]'}`}>
             <ul className="flex flex-col gap-4 w-full">
               {menuItems.map((item, index) => (
                 <li
                   key={index}
                   onClick={item.action}
-                  className="text-text-default hover:text-button-primary transition-colors cursor-pointer"
+                  className={`text-text-default hover:text-button-primary transition-colors cursor-pointer ${isClosing ? 'animate-[fadeOut_0.1s_ease-out]' : 'animate-[fadeIn_0.4s_ease-out] opacity-0'}`}
+                  style={{ 
+                    animationDelay: isClosing ? '0s' : `${index * 0.1}s`, 
+                    animationFillMode: 'forwards' 
+                  }}
                 >
                   <Text variant="small" tag="span" text={item.label} />
                 </li>
               ))}
-              <li>
+              <li 
+                className={`${isClosing ? 'animate-[fadeOut_0.1s_ease-out]' : 'animate-[fadeIn_0.4s_ease-out] opacity-0'}`}
+                style={{ 
+                  animationDelay: isClosing ? '0s' : `${menuItems.length * 0.1}s`, 
+                  animationFillMode: 'forwards' 
+                }}
+              >
                 <Button variant="primary" wide onClick={scrollToForm}>
                   Entrar em contato
                 </Button>
