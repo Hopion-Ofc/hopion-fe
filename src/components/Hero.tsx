@@ -54,30 +54,32 @@ function Hero() {
         </div>
       </section>
 
-      <section className="relative w-full overflow-hidden px-8 mt-16">
-        <div
-          className="relative bg-cover bg-center bg-no-repeat rounded-3xl p-2 overflow-hidden"
-          style={{
-            backgroundImage: `url(${hopionHandleWorld})`,
-          }}
-        >
-          <div className={`flex items-center h-full ${isMobile ? "py-12 px-8" : "py-12 px-16"}`}>
-            <div className="max-w-2xl">
-              <Text
-                variant={isMobile ? "medium-highlight" : "heading-md-highlight"}
-                tag="h2"
-                className="mb-4"
-                text="Quer tirar sua ideia do papel?"
-              />
-              <Text
-                variant={isMobile ? "small" : "medium"}
-                tag="p"
-                className="mb-6"
-                text="Conte pra gente e receba um retorno ainda hoje."
-              />
-              <Button variant="invisible" onClick={scrollToForm}>
-                Falar com a Hopion
-              </Button>
+      <section className="relative w-full overflow-hidden mt-16">
+        <div className="max-w-7xl mx-auto px-8">
+          <div
+            className="relative bg-cover bg-center bg-no-repeat rounded-3xl p-2 overflow-hidden"
+            style={{
+              backgroundImage: `url(${hopionHandleWorld})`,
+            }}
+          >
+            <div className={`flex items-center h-full ${isMobile ? "py-12 px-8" : "py-12 px-16"}`}>
+              <div className="max-w-2xl">
+                <Text
+                  variant={isMobile ? "medium-highlight" : "heading-md-highlight"}
+                  tag="h2"
+                  className="mb-4"
+                  text="Quer tirar sua ideia do papel?"
+                />
+                <Text
+                  variant={isMobile ? "small" : "medium"}
+                  tag="p"
+                  className="mb-6"
+                  text="Conte pra gente e receba um retorno ainda hoje."
+                />
+                <Button variant="invisible" onClick={scrollToForm}>
+                  Falar com a Hopion
+                </Button>
+              </div>
             </div>
           </div>
         </div>
