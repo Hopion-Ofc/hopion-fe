@@ -10,6 +10,7 @@ interface ButtonProps {
   type?: 'button' | 'submit' | 'reset'
   onClick?: () => void
   wide?: boolean
+  disabled?: boolean
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
@@ -27,7 +28,8 @@ export function Button({
   className = '',
   type = 'button',
   onClick,
-  wide = false
+  wide = false,
+  disabled = false
 }: ButtonProps) {
   const isMobile = useIsMobile()
   const isXMobile = useIsMobile(500)
@@ -63,6 +65,7 @@ export function Button({
       className={combinedClassName}
       style={buttonStyle}
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </button>
