@@ -122,21 +122,21 @@ function Footer() {
             alt="Hopion Eclipse"
             className={`w-auto max-w-full ${!isMobile ? 'rounded-lg' : ''}`}
           />
-          <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 text-left px-4 md:px-8">
+          <div className={`absolute top-1/2 transform -translate-y-1/2 text-left ${isXMobile ? 'right-3 left-[50%]' : isMobile ? 'right-4 left-[50%]' : 'right-8 left-[50%]'}`}>
             <div className="max-w-full">
               <Text
-                variant={isXMobile ? "xsmall-highlight" : isMobile ? "medium" : "heading-sm-highlight"}
+                variant={isXMobile ? "xxsmall-highlight" : isMobile ? "xsmall-highlight" : "heading-sm-highlight"}
                 tag="h2"
-                className="mb-4 break-all"
+                className={isXMobile ? "mb-1 leading-tight" : isMobile ? "mb-2 leading-tight" : "mb-4"}
                 text="Quer começar seu projeto agora?"
               />
               <Text
-                variant={isXMobile ? "xxsmall" : isMobile ? "small" : "medium"}
+                variant={isXMobile ? "xxsmall" : isMobile ? "xxsmall" : "medium"}
                 tag="p"
-                className="mb-2 break-all"
+                className={isXMobile ? "mb-1.5 leading-tight" : isMobile ? "mb-2 leading-tight" : "mb-3"}
                 text="Fale com a gente e transforme sua visão em realidade."
               />
-              <Button variant={isXMobile ? "invisible-xsmall" : "invisible"} onClick={scrollToForm}>Falar com a Hopion</Button>
+              <Button variant="invisible" onClick={scrollToForm}>Falar com a Hopion</Button>
             </div>
           </div>
         </div>
