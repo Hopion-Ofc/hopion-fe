@@ -2,5 +2,93 @@
 
 @theme {
   --color-primary: #fd7213;
-  --color-primary-bg: #061427;
+  --color-primary-bg: #0c0c14;
+  --color-button-primary: #1853CE;
+  --color-text-default: #f0f0f0;
+  --color-secondary: #13131F;
+  --color-whatsapp: #25D366;
+  --color-whatsapp-hover: #20BA5A;
+  --color-success-bg: #f0fdf4;
+  --color-success-border: #22c55e;
+  --color-success-text: #166534;
+  --color-success-text-light: #15803d;
+  --color-success-icon: #16a34a;
+  --color-error-bg: #fef2f2;
+  --color-error-border: #ef4444;
+  --color-error-text: #991b1b;
+  --color-error-text-light: #dc2626;
+  --color-error-icon: #dc2626;
+  --font-family-sans: 'Source Sans 3', sans-serif;
+}
+
+* {
+  font-family: 'Source Sans 3', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0c0c14;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #1853CE 0%, #063088 100%);
+  border-radius: 10px;
+  border: 2px solid #0c0c14;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #2060e0 0%, #074099 100%);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #1853CE #0c0c14;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
