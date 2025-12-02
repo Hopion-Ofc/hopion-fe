@@ -7,6 +7,7 @@ import { useSmoothScroll } from "../hooks/useSmoothScroll";
 import hopion_eclipse from "../assets/hopion-eclipse.png";
 import hopion_eclipse_mobile from "../assets/hopion-eclipse-mobile.png";
 import smoothscroll from 'smoothscroll-polyfill';
+import { contactService } from "../services/api";
 
 function Footer() {
   const isMobile = useIsMobile();
@@ -17,6 +18,11 @@ function Footer() {
     email: "",
     descricao: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: 'success' | 'error' | null;
+    message: string;
+  }>({ type: null, message: '' });
 
   useEffect(() => {
     smoothscroll.polyfill();
@@ -32,9 +38,33 @@ function Footer() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Formulário enviado:", formData);
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: '' });
+
+    try {
+      await contactService.sendContact({
+        name: formData.nome,
+        email: formData.email,
+        subject: 'Nova ideia de software',
+        message: formData.descricao,
+      });
+
+      setSubmitStatus({
+        type: 'success',
+        message: 'Mensagem enviada com sucesso! Entraremos em contato em breve.',
+      });
+      setFormData({ nome: '', email: '', descricao: '' });
+    } catch (error: unknown) {
+      const apiError = error as { errors?: Array<{ message: string }> };
+      setSubmitStatus({
+        type: 'error',
+        message: apiError?.errors?.[0]?.message || 'Erro ao enviar mensagem. Tente novamente.',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const scrollToForm = () => {
@@ -203,11 +233,43 @@ function Footer() {
                 placeholder=""
                 rows={6}
               />
+              
+              {submitStatus.type && (
+                <div
+                  className={`mb-4 p-4 rounded-2xl border-2 ${
+                    submitStatus.type === 'success'
+                      ? 'bg-success-bg border-success-border'
+                      : 'bg-error-bg border-error-border'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <Text
+                      variant={submitStatus.type === 'success' ? 'success-icon' : 'error-icon'}
+                      tag="span"
+                      text={submitStatus.type === 'success' ? '✓' : '⚠'}
+                    />
+                    <div className="flex-1">
+                      <Text
+                        variant={submitStatus.type === 'success' ? 'success-title' : 'error-title'}
+                        tag="p"
+                        className="mb-1"
+                        text={submitStatus.type === 'success' ? 'Sucesso!' : 'Erro'}
+                      />
+                      <Text
+                        variant={submitStatus.type === 'success' ? 'success-message' : 'error-message'}
+                        tag="p"
+                        text={submitStatus.message}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <Button
                 variant={isMobile ? "primary-small" : "primary"}
                 type="submit"
               >
-                Enviar minha Ideia
+                {isSubmitting ? 'Enviando...' : 'Enviar minha Ideia'}
               </Button>
             </form>
           </div>

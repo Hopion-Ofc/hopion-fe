@@ -7,6 +7,7 @@ interface InputProps {
   className?: string
   placeholder?: string
   rows?: number
+  required?: boolean
 }
 
 export function Input({ 
@@ -17,7 +18,8 @@ export function Input({
   onChange,
   className = '',
   placeholder = '',
-  rows = 4
+  rows = 4,
+  required = false
 }: InputProps) {
   const baseInputClasses = 'w-full px-4 py-2 rounded-2xl border bg-text-default text-base font-normal focus:outline-none focus:ring-2 focus:border-transparent'
   const combinedInputClassName = `${baseInputClasses} ${className}`.trim()
@@ -39,6 +41,7 @@ export function Input({
           className={combinedInputClassName}
           placeholder={placeholder}
           rows={rows}
+          required={required}
         />
       ) : (
         <input
@@ -49,6 +52,7 @@ export function Input({
           onChange={onChange}
           className={combinedInputClassName}
           placeholder={placeholder}
+          required={required}
         />
       )}
     </div>

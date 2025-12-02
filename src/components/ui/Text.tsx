@@ -18,6 +18,12 @@ type TextVariant =
   | 'heading-lg-highlight'
   | 'heading-xl'
   | 'heading-xl-highlight'
+  | 'success-title'
+  | 'success-message'
+  | 'success-icon'
+  | 'error-title'
+  | 'error-message'
+  | 'error-icon'
 
 interface TextProps {
   variant: TextVariant
@@ -46,6 +52,12 @@ const variantStyles: Record<TextVariant, string> = {
   'xxsmall-highlight': 'text-xs font-semibold',
   'medium': 'text-xl font-normal',
   'medium-highlight': 'text-xl font-semibold',
+  'success-title': 'text-base font-semibold text-success-text',
+  'success-message': 'text-sm font-normal text-success-text-light',
+  'success-icon': 'text-xl font-normal text-success-icon',
+  'error-title': 'text-base font-semibold text-error-text',
+  'error-message': 'text-sm font-normal text-error-text-light',
+  'error-icon': 'text-xl font-normal text-error-icon',
 }
 
 export function Text({ 
@@ -56,7 +68,10 @@ export function Text({
   text
 }: TextProps) {
   const variantClass = variantStyles[variant]
-  const textColorClass = 'text-text-default'
+  
+  const hasCustomColor = variant.includes('success') || variant.includes('error')
+  const textColorClass = hasCustomColor ? '' : 'text-text-default'
+  
   const combinedClassName = `${variantClass} ${textColorClass} ${className}`.trim()
 
   return <Tag className={combinedClassName}>{text || children}</Tag>
