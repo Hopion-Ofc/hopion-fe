@@ -24,6 +24,9 @@ type TextVariant =
   | 'error-title'
   | 'error-message'
   | 'error-icon'
+  | 'warning-title'
+  | 'warning-message'
+  | 'warning-icon'
 
 interface TextProps {
   variant: TextVariant
@@ -58,6 +61,9 @@ const variantStyles: Record<TextVariant, string> = {
   'error-title': 'text-base font-semibold text-error-text',
   'error-message': 'text-sm font-normal text-error-text-light',
   'error-icon': 'text-xl font-normal text-error-icon',
+  'warning-title': 'text-base font-semibold text-warning-text',
+  'warning-message': 'text-sm font-normal text-warning-text-light',
+  'warning-icon': 'text-xl font-normal text-warning-icon',
 }
 
 export function Text({ 
@@ -69,7 +75,7 @@ export function Text({
 }: TextProps) {
   const variantClass = variantStyles[variant]
   
-  const hasCustomColor = variant.includes('success') || variant.includes('error')
+  const hasCustomColor = variant.includes('success') || variant.includes('error') || variant.includes('warning')
   const textColorClass = hasCustomColor ? '' : 'text-text-default'
   
   const combinedClassName = `${variantClass} ${textColorClass} ${className}`.trim()

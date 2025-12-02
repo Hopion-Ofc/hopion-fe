@@ -18,6 +18,11 @@
   --color-error-text: #991b1b;
   --color-error-text-light: #dc2626;
   --color-error-icon: #dc2626;
+  --color-warning-bg: #fefce8;
+  --color-warning-border: #eab308;
+  --color-warning-text: #854d0e;
+  --color-warning-text-light: #ca8a04;
+  --color-warning-icon: #eab308;
   --font-family-sans: 'Source Sans 3', sans-serif;
 }
 

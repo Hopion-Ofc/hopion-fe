@@ -20,7 +20,7 @@ function Footer() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{
-    type: 'success' | 'error' | null;
+    type: 'success' | 'error' | 'warning' | null;
     message: string;
   }>({ type: null, message: '' });
 
@@ -40,8 +40,34 @@ function Footer() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSubmitting(true);
     setSubmitStatus({ type: null, message: '' });
+
+    if (!formData.nome.trim() || !formData.email.trim() || !formData.descricao.trim()) {
+      setSubmitStatus({
+        type: 'warning',
+        message: 'Por favor, preencha todos os campos antes de enviar.',
+      });
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setSubmitStatus({
+        type: 'warning',
+        message: 'Por favor, insira um e-mail válido.',
+      });
+      return;
+    }
+
+    if (formData.descricao.trim().length < 10) {
+      setSubmitStatus({
+        type: 'warning',
+        message: 'A descrição deve ter no mínimo 10 caracteres.',
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
 
     try {
       await contactService.sendContact({
@@ -236,24 +262,56 @@ function Footer() {
                   className={`mb-4 p-4 rounded-2xl border-2 ${
                     submitStatus.type === 'success'
                       ? 'bg-success-bg border-success-border'
+                      : submitStatus.type === 'warning'
+                      ? 'bg-warning-bg border-warning-border'
                       : 'bg-error-bg border-error-border'
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     <Text
-                      variant={submitStatus.type === 'success' ? 'success-icon' : 'error-icon'}
+                      variant={
+                        submitStatus.type === 'success' 
+                          ? 'success-icon' 
+                          : submitStatus.type === 'warning'
+                          ? 'warning-icon'
+                          : 'error-icon'
+                      }
                       tag="span"
-                      text={submitStatus.type === 'success' ? '✓' : '⚠'}
+                      text={
+                        submitStatus.type === 'success' 
+                          ? '✓' 
+                          : submitStatus.type === 'warning'
+                          ? '⚠'
+                          : '⚠'
+                      }
                     />
                     <div className="flex-1">
                       <Text
-                        variant={submitStatus.type === 'success' ? 'success-title' : 'error-title'}
+                        variant={
+                          submitStatus.type === 'success' 
+                            ? 'success-title' 
+                            : submitStatus.type === 'warning'
+                            ? 'warning-title'
+                            : 'error-title'
+                        }
                         tag="p"
                         className="mb-1"
-                        text={submitStatus.type === 'success' ? 'Sucesso!' : 'Erro'}
+                        text={
+                          submitStatus.type === 'success' 
+                            ? 'Sucesso!' 
+                            : submitStatus.type === 'warning'
+                            ? 'Atenção'
+                            : 'Erro'
+                        }
                       />
                       <Text
-                        variant={submitStatus.type === 'success' ? 'success-message' : 'error-message'}
+                        variant={
+                          submitStatus.type === 'success' 
+                            ? 'success-message' 
+                            : submitStatus.type === 'warning'
+                            ? 'warning-message'
+                            : 'error-message'
+                        }
                         tag="p"
                         text={submitStatus.message}
                       />
