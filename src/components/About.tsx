@@ -119,7 +119,7 @@ function About() {
   ];
 
   return (
-    <section className="max-w-7xl mx-auto py-16 px-8" id="about">
+    <section className={`max-w-7xl mx-auto pt-16 w-full ${isMobile ? "px-4" : "px-8"} overflow-hidden`} id="about">
       {!isMobile && (
         <div className={`flex ${isMobile ? "flex-col" : "flex-row justify-between items-start"} gap-8 mb-12`}>
           <div className={isMobile ? "" : "max-w-md"}>
@@ -145,32 +145,36 @@ function About() {
       )}
 
       {isMobile ? (
-        <div className="flex flex-col gap-6 mb-12">
-          {mobileCards.map((card, idx) => (
-            <div
-              key={idx}
-              className={`rounded-3xl p-6 flex flex-col ${card.variant === "hero" ? "min-h-[260px] relative overflow-hidden bg-cover bg-center justify-center" : "bg-secondary"}`}
-              style={card.variant === "hero" ? { backgroundImage: `url(${card.image})` } : undefined}
-            >
-              <div className={card.variant === "hero" ? "relative z-10" : ""}>
-                <Text variant={card.variant === "hero" ? "medium-highlight" : "small-highlight"} tag="h3" className="mb-3" text={card.title} />
-                <Text variant="small" tag="p" className="mb-4" text={card.description} />
-                {card.variant === "hero" && (
-                  <div className="mt-4">
-                    <Button variant="primary" onClick={scrollToForm}>
-                      Entrar em contato
-                    </Button>
-                  </div>
-                )}
+        <div className="mb-12">
+          <div
+            className="rounded-3xl max-w-full p-5 flex flex-col relative overflow-hidden bg-cover bg-center justify-center mb-4"
+            style={{ backgroundImage: `url(${hopionCell})` }}
+          >
+            <div className="relative z-10">
+              <Text variant="medium-highlight" tag="h3" className="mb-3" text="Sobre a Hopion" />
+              <Text variant="small" tag="p" className="mb-4" text="A Hopion nasceu com um propósito simples: construir softwares que unem performance, design e tecnologia moderna." />
+              <div className="mt-4">
+                <Button variant="primary" onClick={scrollToForm}>
+                  Entrar em contato
+                </Button>
               </div>
-              {card.variant !== "hero" && card.image && (
-                <img src={card.image} alt={card.title} className="w-full h-auto object-contain rounded-lg mt-2" />
-              )}
             </div>
-          ))}
+          </div>
+
+          <div className="flex overflow-x-auto gap-3 snap-x snap-mandatory max-w-full scroll-smooth">
+            {mobileCards.slice(1).map((card, idx) => (
+              <div
+                key={idx}
+                className="flex-shrink-0 w-[55%] snap-center rounded-3xl p-4 flex flex-col bg-secondary"
+              >
+                <Text variant="small-highlight" tag="h3" className="mb-3" text={card.title} />
+                <Text variant="small" tag="p" text={card.description} />
+              </div>
+            ))}
+          </div>
         </div>
       ) : (
-        <div className={`flex ${isMobile ? "flex-col" : "flex-row"} gap-6 mb-12`}>
+        <div className={`flex ${isMobile ? "flex-col" : "flex-row"} gap-6 mb-16`}>
           <div
             className={`bg-secondary rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden bg-cover bg-center min-h-[300px] ${isMobile ? "w-full" : "flex-[1.2]"}`}
             style={{

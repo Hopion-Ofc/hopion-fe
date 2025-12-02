@@ -8,9 +8,7 @@ function Home() {
     <div className="flex flex-col min-h-screen bg-primary-bg">
       <Hero />
       <About />
-      <div className="py-16 px-8">
         <Footer />
-      </div>
       <WhatsAppButton />
     </div>
   )
