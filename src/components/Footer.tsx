@@ -73,7 +73,7 @@ function Footer() {
 
   return (
     <footer>
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto py-16 px-4">
         <div
           className={
             isMobile
@@ -95,12 +95,9 @@ function Footer() {
         </div>
 
         <div
-          className={`flex gap-4 ${
+          className={`flex gap-3 ${
             isMobile ? "overflow-x-auto snap-x snap-mandatory" : "justify-center"
-          } py-4  px-8 ml-1
-    [&::-webkit-scrollbar]:hidden
-    [-ms-overflow-style:none]
-    [scrollbar-width:none]
+          } px-4
   `}
         >
           {[
@@ -146,7 +143,7 @@ function Footer() {
           ))}
         </div>
 
-        <div className="relative my-12">
+        <div className="relative my-16">
           <img
             src={isMobile ? hopion_eclipse_mobile : hopion_eclipse}
             alt="Hopion Eclipse"

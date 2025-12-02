@@ -11,6 +11,7 @@ interface ButtonProps {
   onClick?: () => void
   wide?: boolean
   disabled?: boolean
+  keepSize?: boolean
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
@@ -29,21 +30,24 @@ export function Button({
   type = 'button',
   onClick,
   wide = false,
-  disabled = false
+  disabled = false,
+  keepSize = false
 }: ButtonProps) {
   const isMobile = useIsMobile()
   const isXMobile = useIsMobile(500)
 
   let effectiveVariant = variant
 
-  if (variant === 'primary' && isXMobile) {
-    effectiveVariant = 'primary-xsmall'
-  } else if (variant === 'primary' && isMobile) {
-    effectiveVariant = 'primary-small'
-  } else if (variant === 'invisible' && isXMobile) {
-    effectiveVariant = 'invisible-xsmall'
-  } else if (variant === 'invisible' && isMobile) {
-    effectiveVariant = 'invisible-small'
+  if (!keepSize) {
+    if (variant === 'primary' && isXMobile) {
+      effectiveVariant = 'primary-xsmall'
+    } else if (variant === 'primary' && isMobile) {
+      effectiveVariant = 'primary-small'
+    } else if (variant === 'invisible' && isXMobile) {
+      effectiveVariant = 'invisible-xsmall'
+    } else if (variant === 'invisible' && isMobile) {
+      effectiveVariant = 'invisible-small'
+    }
   }
 
   const variantClass = variantStyles[effectiveVariant]

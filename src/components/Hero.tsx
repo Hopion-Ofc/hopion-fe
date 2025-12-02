@@ -47,7 +47,7 @@ function Hero() {
           />
         </div>
 
-        <div className={`relative z-10 text-center px-8 ${isMobile ? "pb-6" : "pb-16"}`}>
+        <div className={`relative z-10 text-center px-4 ${isMobile ? "pb-6" : "pb-16"}`}>
           <Button variant="invisible" onClick={scrollToForm}>
             Falar com a Hopion
           </Button>
@@ -55,7 +55,7 @@ function Hero() {
       </section>
 
       <section className="relative w-full overflow-hidden mt-16">
-        <div className="max-w-7xl mx-auto px-8">
+        <div className="max-w-7xl mx-auto px-4">
           <div
             className="relative bg-cover bg-center bg-no-repeat rounded-3xl p-2 overflow-hidden"
             style={{

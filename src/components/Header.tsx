@@ -170,7 +170,7 @@ function Header() {
                   animationFillMode: 'forwards' 
                 }}
               >
-                <Button variant="primary" wide onClick={scrollToForm}>
+                <Button variant="primary-small" wide keepSize onClick={scrollToForm}>
                   Entrar em contato
                 </Button>
               </li>
