@@ -6,6 +6,8 @@
   --color-button-primary: #1853CE;
   --color-text-default: #f0f0f0;
   --color-secondary: #13131F;
+  --color-whatsapp: #25D366;
+  --color-whatsapp-hover: #20BA5A;
   --font-family-sans: 'Source Sans 3', sans-serif;
 }
 
@@ -15,6 +17,30 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0c0c14;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #1853CE 0%, #063088 100%);
+  border-radius: 10px;
+  border: 2px solid #0c0c14;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #2060e0 0%, #074099 100%);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #1853CE #0c0c14;
 }
 
 @keyframes slideDown {
