@@ -3,7 +3,6 @@ import Text from "./ui/Text";
 import Input from "./ui/Input";
 import Button from "./ui/Button";
 import { useIsMobile } from "../hooks/useIsMobile";
-import { useSmoothScroll } from "../hooks/useSmoothScroll";
 import hopion_eclipse from "../assets/hopion-eclipse.png";
 import hopion_eclipse_mobile from "../assets/hopion-eclipse-mobile.png";
 import smoothscroll from 'smoothscroll-polyfill';
@@ -12,7 +11,6 @@ import { contactService } from "../services/api";
 function Footer() {
   const isMobile = useIsMobile();
   const isXMobile = useIsMobile(500);
-  const { scrollToSection } = useSmoothScroll();
   const [formData, setFormData] = useState({
     nome: "",
     email: "",
@@ -93,8 +91,11 @@ function Footer() {
     }
   };
 
-  const scrollToForm = () => {
-    scrollToSection("formSection");
+
+  const openWhatsApp = (message: string) => {
+    const phoneNumber = import.meta.env.VITE_WHATSAPP_NUMBER || "";
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
   };
 
   return (
@@ -189,7 +190,7 @@ function Footer() {
                 className={isXMobile ? "mb-1.5 leading-tight" : isMobile ? "mb-2 leading-tight" : "mb-3"}
                 text="Fale com a gente e transforme sua visão em realidade."
               />
-              <Button variant="invisible" onClick={scrollToForm}>Falar com a Hopion</Button>
+              <Button variant="invisible" onClick={() => openWhatsApp("Olá! Gostaria de falar com um especialista sobre meu projeto.")}>Falar com um Especialista</Button>
             </div>
           </div>
         </div>
