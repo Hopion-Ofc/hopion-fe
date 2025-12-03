@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import Text from "./ui/Text";
 import Button from "./ui/Button";
 import { useIsMobile } from "../hooks/useIsMobile";
-import { useSmoothScroll } from "../hooks/useSmoothScroll";
 import Header from "./Header";
 import smoothscroll from "smoothscroll-polyfill";
 import hopionHero from "../assets/hopion-hero.png";
@@ -10,14 +9,15 @@ import hopionHandleWorld from "../assets/hopion-handle-world.png";
 
 function Hero() {
   const isMobile = useIsMobile();
-  const { scrollToSection } = useSmoothScroll();
 
   useEffect(() => {
     smoothscroll.polyfill();
   }, []);
 
-  const scrollToForm = () => {
-    scrollToSection("formSection");
+  const openWhatsApp = (message: string) => {
+    const phoneNumber = import.meta.env.VITE_WHATSAPP_NUMBER || "";
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
   };
 
   return (
@@ -48,8 +48,8 @@ function Hero() {
         </div>
 
         <div className={`relative z-10 text-center px-4 ${isMobile ? "pb-6" : "pb-16"}`}>
-          <Button variant="invisible" onClick={scrollToForm}>
-            Falar com a Hopion
+          <Button variant="primary" onClick={() => openWhatsApp("Olá! Gostaria de solicitar um orçamento.")}>
+            Solicitar Orçamento
           </Button>
         </div>
       </section>
@@ -76,8 +76,8 @@ function Hero() {
                   className="mb-6"
                   text="Conte pra gente e receba um retorno ainda hoje."
                 />
-                <Button variant="invisible" onClick={scrollToForm}>
-                  Falar com a Hopion
+                <Button variant="invisible" onClick={() => openWhatsApp("Olá! Gostaria de falar com um especialista sobre minha ideia.")}>
+                  Falar com um Especialista
                 </Button>
               </div>
             </div>

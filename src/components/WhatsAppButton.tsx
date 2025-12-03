@@ -1,5 +1,5 @@
 function WhatsAppButton() {
-  const phoneNumber = "5531972499694";
+  const phoneNumber = import.meta.env.VITE_WHATSAPP_NUMBER;
   const message = encodeURIComponent(
     "Olá! Tenho uma ideia de projeto e gostaria de conversar com a equipe da Hopion."
   );
