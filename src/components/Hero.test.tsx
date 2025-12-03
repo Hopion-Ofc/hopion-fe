@@ -34,21 +34,33 @@ describe('Hero Component', () => {
     expect(screen.getByText(/Criamos soluções digitais sob medida/i)).toBeInTheDocument()
   })
 
-  it('should render the CTA button', () => {
+  it('should render the CTA buttons', () => {
     ;(useIsMobile as Mock).mockReturnValue(false)
     render(<Hero />)
-    const buttons = screen.getAllByRole('button', { name: 'Falar com a Hopion' })
-    expect(buttons.length).toBeGreaterThan(0)
+    expect(screen.getByRole('button', { name: 'Solicitar Orçamento' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Falar com um Especialista' })).toBeInTheDocument()
   })
 
-  it('should call scrollToForm when button is clicked', async () => {
+  it('should open WhatsApp when buttons are clicked', async () => {
     ;(useIsMobile as Mock).mockReturnValue(false)
+    const windowOpenSpy = vi.spyOn(window, 'open').mockImplementation(() => null)
 
     render(<Hero />)
-    const buttons = screen.getAllByRole('button', { name: 'Falar com a Hopion' })
+    const solicitarButton = screen.getByRole('button', { name: 'Solicitar Orçamento' })
+    const especialistaButton = screen.getByRole('button', { name: 'Falar com um Especialista' })
     
-    await userEvent.click(buttons[0])
-    
-    expect(buttons[0]).toBeInTheDocument()
+    await userEvent.click(solicitarButton)
+    expect(windowOpenSpy).toHaveBeenCalledWith(
+      expect.stringContaining('wa.me'),
+      '_blank'
+    )
+
+    await userEvent.click(especialistaButton)
+    expect(windowOpenSpy).toHaveBeenCalledWith(
+      expect.stringContaining('wa.me'),
+      '_blank'
+    )
+
+    windowOpenSpy.mockRestore()
   })
 })

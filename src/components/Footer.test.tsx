@@ -72,18 +72,21 @@ describe('Footer Component', () => {
     expect(descriptionInput.value).toBe('A great software idea')
   })
 
-  it('should call scrollToForm when the "Falar com a Hopion" button is clicked', async () => {
+  it('should open WhatsApp when the "Falar com um Especialista" button is clicked', async () => {
     ;(useIsMobile as Mock).mockReturnValue(false)
-
-    const scrollToMock = vi.fn()
-    Object.defineProperty(window, 'scrollTo', { value: scrollToMock, writable: true })
+    const windowOpenSpy = vi.spyOn(window, 'open').mockImplementation(() => null)
 
     render(<Footer />)
-    const button = screen.getByRole('button', { name: 'Falar com a Hopion' })
+    const button = screen.getByRole('button', { name: 'Falar com um Especialista' })
     await userEvent.click(button)
 
     await waitFor(() => {
-      expect(scrollToMock).toHaveBeenCalled()
+      expect(windowOpenSpy).toHaveBeenCalledWith(
+        expect.stringContaining('wa.me'),
+        '_blank'
+      )
     })
+
+    windowOpenSpy.mockRestore()
   })
 })
