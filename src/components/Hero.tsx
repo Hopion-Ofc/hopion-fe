@@ -48,7 +48,7 @@ function Hero() {
         </div>
 
         <div className={`relative z-10 text-center px-4 ${isMobile ? "pb-6" : "pb-16"}`}>
-          <Button variant="primary" onClick={() => openWhatsApp("Olá! Gostaria de solicitar um orçamento.")}>
+          <Button variant="invisible" onClick={() => openWhatsApp("Olá! Gostaria de solicitar um orçamento.")}>
             Solicitar Orçamento
           </Button>
         </div>
